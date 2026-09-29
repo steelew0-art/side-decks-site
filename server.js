@@ -28,7 +28,12 @@ app.use((_req, res, next) => {
   next();
 });
 
-app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
+app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'], index: 'index.html' }));
+
+// Explicit homepage route keeps the root URL working across Render/Express configurations.
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 app.get('/healthz', (_req, res) => {
   res.status(200).json({ ok: true, service: 'side-decks-web' });

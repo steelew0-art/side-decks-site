@@ -1,74 +1,47 @@
-# Side Decks — Render Deployment Guide
+# Side Decks — Render Deployment
 
-This package is configured specifically for Render as a Node/Express web service.
+This package is intentionally **root-level**: `package.json`, `server.js`, `public/`, and `render.yaml` all live in the repository root. Do not create an extra `side-decks-site/` folder around these files.
 
-## 1. Create the GitHub repository
+## Easiest deployment
 
-Create a new GitHub repository (for example, `side-decks-website`) and upload the **contents of this folder**. Do not upload `.env` or any Gmail password.
+1. Create a new GitHub repository, for example `side-decks-website`.
+2. Upload **the contents of this folder**, not the folder itself. Your GitHub repository should show `package.json` and `server.js` at the top level.
+3. In Render, choose **New → Blueprint** and connect the repository. Render will detect `render.yaml`.
+4. If creating a Web Service manually, use:
+   - Runtime: Node
+   - Build command: `npm install`
+   - Start command: `npm start`
+   - Health check path: `/healthz`
+5. Add these environment variables in Render:
+   - `SMTP_USER` = `sidedecks910@gmail.com`
+   - `SMTP_PASS` = your Google App Password
+6. Deploy.
 
-The repository should contain `package.json`, `server.js`, `render.yaml`, and `public/` at its root.
+## If you already uploaded the earlier package
 
-## 2. Deploy with Render Blueprint
+If your GitHub repository currently looks like this:
 
-1. Sign in to Render.
-2. Choose **New → Blueprint**.
-3. Connect the GitHub repository.
-4. Render will detect `render.yaml`.
-5. Confirm the service named `side-decks` and create/deploy it.
+```text
+side-decks-site/
+  package.json
+  server.js
+  public/
+```
 
-The included Blueprint uses Render's Free web service plan. Free services can sleep when idle. For a business site, you can change the service to a paid always-on plan later.
+then either move the contents of `side-decks-site` to the repository root, **or** set Render's Root Directory to `side-decks-site` and make sure the build/start commands run there.
 
-## 3. Add Gmail credentials
+## Test
 
-In the Render service, open **Environment** and enter:
+Open your Render URL. The homepage should load at `/`.
 
-- `SMTP_USER` = `sidedecks910@gmail.com`
-- `SMTP_PASS` = your Google **App Password**
+Open `/healthz` and you should see JSON similar to:
 
-The Blueprint already supplies:
+```json
+{"ok":true,"service":"side-decks-web"}
+```
 
-- `SMTP_HOST=smtp.gmail.com`
-- `SMTP_PORT=465`
-- `SMTP_SECURE=true`
-- `MAIL_TO=sidedecks910@gmail.com`
+Then submit the project form and verify the email arrives at `sidedecks910@gmail.com`.
 
-Use a Google App Password, not the normal Gmail password. The Google account must have 2-Step Verification enabled before an App Password can be created.
+## Gmail
 
-## 4. Test the deployed site
-
-Open the Render URL and submit a test inquiry with one small JPG or PNG. Confirm that the message arrives at `sidedecks910@gmail.com` and that the uploaded file is attached.
-
-The health endpoint is:
-
-`/healthz`
-
-It should return a small JSON response showing `ok: true`.
-
-## 5. Connect the custom domain
-
-In Render, open the service and choose **Settings → Custom Domains**. Add the Side Decks domain and follow Render's DNS instructions at your domain registrar.
-
-After DNS propagates, confirm the site loads over HTTPS and submit another test inquiry.
-
-## 6. Before advertising the site
-
-- Replace design-direction cards with real project photos as projects are completed.
-- Add a business phone number and click-to-call link if desired.
-- Add a privacy policy and any required business/legal disclosures.
-- Verify the service area and project types.
-- Test the form from a phone as well as a desktop.
-- Consider upgrading from Render Free to an always-on paid instance for a customer-facing production site.
-
-## Troubleshooting
-
-### Email does not arrive
-
-Check Render → Environment for `SMTP_USER` and `SMTP_PASS`. Make sure the password is a Google App Password, not the normal Gmail password. Then review the Render service logs.
-
-### The site works but uploads fail
-
-The form accepts up to 8 files, with a maximum of 10 MB per file. Supported types are JPG, PNG, WEBP and PDF.
-
-### Render says the service is unhealthy
-
-Open `/healthz`. If it does not return `ok: true`, check the Render logs for a startup error.
+Use a Google App Password, not your normal Gmail password. Never commit `.env` or credentials to GitHub.
