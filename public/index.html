@@ -9,10 +9,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIINfQ3Lh8Q0Z8s9G4Jkq5J8hWjX7mX0k8I=" crossorigin="" />
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="announcement">CUSTOM DECK BUILDERS · PENDER · NEW HANOVER · BRUNSWICK</div>
+  <div class="announcement">CUSTOM DECKS · PORCHES · OUTDOOR LIVING</div>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="Side Decks home"><img src="/assets/side-decks-logo.png" alt="Side Decks — Custom Deck Builders" /></a>
     <button class="nav-toggle" aria-expanded="false" aria-controls="mainNav" aria-label="Open navigation"><span></span><span></span><span></span></button>
@@ -29,7 +30,7 @@
         <h1>Outdoor spaces made for <em>coastal living.</em></h1>
         <p class="hero-lede">Custom decks, porches and outdoor living spaces designed around your home, your lifestyle and the way you want to enjoy the Carolina coast.</p>
         <div class="hero-actions"><a class="button primary" href="#estimate">Tell Us About Your Project <span>→</span></a><a class="text-link" href="#work">Explore our work ↓</a></div>
-        <div class="hero-proof"><div><strong>3</strong><span>Coastal counties</span></div><div><strong>1</strong><span>Local design focus</span></div><div><strong>∞</strong><span>Ways to use the space</span></div></div>
+        <div class="hero-proof"><div><strong>01</strong><span>Custom design</span></div><div><strong>02</strong><span>Quality craftsmanship</span></div><div><strong>03</strong><span>Built for coastal life</span></div></div>
       </div>
       <div class="hero-art hero-photo" aria-label="Photorealistic coastal deck overlooking marshland at sunset">
         <img src="/assets/hero-deck.webp" alt="Custom coastal deck with covered outdoor living space overlooking a marsh at sunset" />
@@ -48,7 +49,7 @@
     </section>
 
     <section class="work section" id="work">
-      <div class="section-head"><div><div class="section-kicker">OUR WORK</div><h2>Outdoor spaces built for <em>real life.</em></h2></div><p>Thoughtful deck and porch designs, shown with the level of detail and finish we bring to every project.</p></div>
+      <div class="section-head"><div><div class="section-kicker">OUR WORK</div><h2>Outdoor spaces built for <em>real life.</em></h2></div><p>Thoughtful deck and porch design with an emphasis on proportion, materials, details and the way the finished space lives.</p></div>
       <div class="work-grid">
         <article class="work-card work-card--sunset"><div class="visual visual-photo"><img src="/assets/hero-deck.webp" alt="Open-air elevated deck overlooking a coastal marsh" /></div><div class="card-copy"><span>01 · COASTAL RETREAT</span><h3>Open-air entertaining deck</h3><p>Wide gathering space, clean railing lines and room for dining, lounging and sunset watching.</p></div></article>
         <article class="work-card work-card--shade"><div class="visual visual-photo"><img src="/assets/covered-deck.webp" alt="Covered outdoor room with kitchen, dining and lounge areas" /></div><div class="card-copy"><span>02 · ALL-WEATHER LIVING</span><h3>Covered outdoor room</h3><p>A roofed extension of the home for shade, meals, conversation and year-round use.</p></div></article>
@@ -73,7 +74,11 @@
       <div class="process-grid"><div><span>01</span><h3>Share your idea</h3><p>Tell us what you have in mind and upload photos, sketches or plans.</p></div><div><span>02</span><h3>Talk through the space</h3><p>We’ll discuss your home, goals, timeline and the details that matter to you.</p></div><div><span>03</span><h3>Shape the project</h3><p>Turn the idea into a practical project plan with the right scope and approach.</p></div><div><span>04</span><h3>Build the space</h3><p>Move from planning to a finished outdoor space designed around your home.</p></div></div>
     </section>
 
-    <section class="service-area" id="service-area"><div class="service-inner"><div><div class="section-kicker">WHERE WE BUILD</div><h2>Serving the coast from <em>Pender to Brunswick.</em></h2><p>Side Decks serves homeowners across southeastern coastal North Carolina, with a primary focus on Pender, New Hanover and Brunswick counties.</p><a class="button light-button" href="#estimate">Check Your Project Area <span>→</span></a></div><div class="map-card"><div class="map-water"></div><div class="county-shape shape-pender">PENDER</div><div class="county-shape shape-new">NEW<br>HANOVER</div><div class="county-shape shape-brun">BRUNSWICK</div><div class="map-pin pin-p">●</div><div class="map-pin pin-n">●</div><div class="map-pin pin-b">●</div><div class="map-label">COASTAL NC</div></div></div></section>
+    <section class="service-area" id="service-area"><div class="service-inner"><div><div class="section-kicker">WHERE WE BUILD</div><h2>Serving the coast from <em>Pender to Brunswick.</em></h2><p>Side Decks serves homeowners across southeastern coastal North Carolina, with a primary focus on Pender, New Hanover and Brunswick counties.</p><a class="button light-button" href="#estimate">Check Your Project Area <span>→</span></a></div><div class="map-card map-card--leaflet">
+        <div id="serviceMap" class="service-map" role="img" aria-label="Map of coastal North Carolina showing Side Decks service areas in Pender, New Hanover and Brunswick counties"></div>
+        <div class="map-overlay-title">COASTAL NC</div>
+        <div class="map-legend"><span class="legend-dot"></span><span>Pender</span><span class="legend-dot"></span><span>New Hanover</span><span class="legend-dot"></span><span>Brunswick</span></div>
+      </div></div></section>
 
     <section class="faq section" id="faqs"><div class="section-head"><div><div class="section-kicker">QUESTIONS</div><h2>Good to know <em>before we start.</em></h2></div><p>Don’t see your question? Send us a project inquiry and include whatever you already know.</p></div><div class="faq-list">
       <details><summary>What should I send with my project inquiry?<span>+</span></summary><p>Anything that helps explain the space: photos of the house and yard, rough dimensions, a hand sketch, an existing plan, inspiration images or notes about how you want to use the deck.</p></details>
@@ -100,5 +105,6 @@
 
   <footer><div class="footer-main"><div><img src="/assets/side-decks-logo.png" alt="Side Decks" /><p>Custom deck builders for coastal southeastern North Carolina.</p></div><div class="footer-links"><a href="#work">Our Work</a><a href="#decks">Deck Types</a><a href="#about">About</a><a href="#service-area">Service Area</a><a href="#faqs">FAQs</a></div><div><span class="footer-label">PROJECT INQUIRIES</span><a class="footer-email" href="mailto:sidedecks910@gmail.com">sidedecks910@gmail.com</a></div></div><div class="footer-bottom"><small>© <span id="year"></span> Side Decks. All rights reserved.</small><small>Pender · New Hanover · Brunswick</small></div></footer>
   <script src="/script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </body>
 </html>

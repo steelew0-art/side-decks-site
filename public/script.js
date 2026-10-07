@@ -59,3 +59,36 @@ form.addEventListener('submit', async (e) => {
 });
 
 document.querySelector('#year').textContent = new Date().getFullYear();
+
+// Real coastal North Carolina service-area map.
+const mapEl = document.querySelector('#serviceMap');
+if (mapEl && window.L) {
+  const map = L.map(mapEl, { scrollWheelZoom: false, zoomControl: true, attributionControl: true }).setView([34.15, -78.05], 9);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 18,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const markerStyle = L.divIcon({
+    className: 'service-pin',
+    html: '<span></span>',
+    iconSize: [18, 18],
+    iconAnchor: [9, 9]
+  });
+
+  const serviceAreas = [
+    { name: 'Pender County', city: 'Hampstead / Surf City area', coords: [34.52, -77.84] },
+    { name: 'New Hanover County', city: 'Wilmington area', coords: [34.23, -77.95] },
+    { name: 'Brunswick County', city: 'Southport / Shallotte area', coords: [33.98, -78.20] }
+  ];
+
+  serviceAreas.forEach(area => {
+    L.marker(area.coords, { icon: markerStyle })
+      .addTo(map)
+      .bindTooltip(`<strong>${area.name}</strong><br>${area.city}`, { direction: 'top', offset: [0, -8] });
+  });
+
+  const bounds = L.latLngBounds(serviceAreas.map(a => a.coords));
+  map.fitBounds(bounds.pad(0.45));
+  setTimeout(() => map.invalidateSize(), 150);
+}
