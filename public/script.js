@@ -85,10 +85,12 @@ if (mapEl && window.L) {
   serviceAreas.forEach(area => {
     L.marker(area.coords, { icon: markerStyle })
       .addTo(map)
-      .bindTooltip(`<strong>${area.name}</strong><br>${area.city}`, { direction: 'top', offset: [0, -8] });
+      .bindTooltip(`<strong>${area.name}</strong><br>${area.city}`, { direction: 'top', offset: [0, -8], sticky: true });
   });
 
   const bounds = L.latLngBounds(serviceAreas.map(a => a.coords));
   map.fitBounds(bounds.pad(0.45));
   setTimeout(() => map.invalidateSize(), 150);
 }
+
+if (mapEl && !window.L) { mapEl.innerHTML = '<div style="display:grid;place-items:center;height:100%;padding:30px;text-align:center;color:#617283;font-weight:700">Service-area map unavailable. Please refresh the page.</div>'; }
